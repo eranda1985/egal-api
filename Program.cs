@@ -40,7 +40,7 @@ app.UseForwardedHeaders(); // Forward headers in case we are behind a reverse pr
 // Specify end-point routing. Route handlers are specifed as inline functions. 
 app.MapGet("/linear", () => { return "Welcome to Linear Regression API."; });
 
-app.MapPost("/linear/findcurve", async ([FromBody] RegressionRequest req) =>
+app.MapPost("/linear/regression", async ([FromBody] RegressionRequest req) =>
  {
      try
      {
@@ -49,10 +49,29 @@ app.MapPost("/linear/findcurve", async ([FromBody] RegressionRequest req) =>
      }
      catch (Exception ex)
      {
+         app.Logger.LogError($"{ex.Message} ---- {ex.StackTrace}");
          return Results.Problem($"Error processing the csv file. Details: {ex.Message}");
      }
  })
  .Produces<LinearRegressionResult>(200)
  .Produces(StatusCodes.Status404NotFound);
+
+app.MapPost("/linear/plot", async ([FromBody] RegressionRequest req) =>
+{
+    try
+    {
+        var service = app.Services.GetRequiredService<ILinearService>();
+        var base64Str = await service.GetGraph(req.url);
+        var bytes = Convert.FromBase64String(base64Str);
+        return Results.File(bytes, "image/png");
+    }
+    catch (Exception ex)
+    {
+        app.Logger.LogError($"{ex.Message} ---- {ex.StackTrace}");
+        return Results.Problem($"Error generating the graph. Details: {ex.Message}");
+    }
+})
+.Produces(200, typeof(File), "image/png")
+.Produces(StatusCodes.Status404NotFound);
 
 app.Run();
