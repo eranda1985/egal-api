@@ -74,4 +74,22 @@ app.MapPost("/linear/plot", async ([FromBody] RegressionRequest req) =>
 .Produces(200, typeof(File), "image/png")
 .Produces(StatusCodes.Status404NotFound);
 
+app.MapPost("/linear/hist", async ([FromBody] RegressionRequest req) =>
+{
+    try
+    {
+        var service = app.Services.GetRequiredService<ILinearService>();
+        var base64Str = await service.GetHist(req.url);
+        var bytes = Convert.FromBase64String(base64Str);
+        return Results.File(bytes, "image/png");
+    }
+    catch (Exception ex)
+    {
+        app.Logger.LogError($"{ex.Message} ---- {ex.StackTrace}");
+        return Results.Problem($"Error generating the graph. Details: {ex.Message}");
+    }
+})
+.Produces(200, typeof(File), "image/png")
+.Produces(StatusCodes.Status404NotFound);
+
 app.Run();
