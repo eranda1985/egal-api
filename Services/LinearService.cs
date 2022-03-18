@@ -76,4 +76,20 @@ public class LinearService : ILinearService
             return base64Str;
         }
     }
+
+    public async Task<string> GetHist(string url)
+    {
+        using (var python = new Process())
+        {
+            // python must be enabled in the environment variable for the following. 
+            python.StartInfo.RedirectStandardOutput = true;
+            python.StartInfo.UseShellExecute = false;
+            python.StartInfo.Arguments = $"{_pythonDir}\\hist.py {url}";
+            python.StartInfo.FileName = "python";
+            python.Start();
+
+            var base64Str = python.StandardOutput.ReadToEnd();
+            return await Task.FromResult<string>(base64Str);
+        }
+    }
 }
