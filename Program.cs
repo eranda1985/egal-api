@@ -1,6 +1,6 @@
 using LinearServices;
 using Microsoft.AspNetCore.Mvc;
-
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
@@ -16,7 +16,8 @@ builder.Services.AddControllers();
 builder.Services.AddWebEncoders();
 builder.Services.AddLogging((loggerFactory) =>
 {
-    loggerFactory.AddConsole();
+    loggerFactory.ClearProviders();
+    loggerFactory.AddSerilog(new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger());
 });
 
 builder.Services.AddTransient<ILinearService, LinearService>();
