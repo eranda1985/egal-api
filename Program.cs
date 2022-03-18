@@ -70,6 +70,8 @@ app.MapPost("/linear/plot", async ([FromBody] RegressionRequest req) =>
         app.Logger.LogError($"{ex.Message} ---- {ex.StackTrace}");
         return Results.Problem($"Error generating the graph. Details: {ex.Message}");
     }
-});
+})
+.Produces(200, typeof(File), "image/png")
+.Produces(StatusCodes.Status404NotFound);
 
 app.Run();
