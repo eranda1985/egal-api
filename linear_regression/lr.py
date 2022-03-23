@@ -98,6 +98,32 @@ def get_training_sets(url):
 
 	return train_features, train_labels
 
+def linear_regression_model(url):
+	train_features, train_labels = get_training_sets(url)
+	
+	# normalise the x dimension (bring it to common scale)
+	x_dim = cl.np.array(train_features['x'])
+	x_dim_normalizer = cl.layers.Normalization(input_shape=[1,], axis=None)
+	x_dim_normalizer.adapt(x_dim)
+
+	x_dim_model = cl.tf.keras.Sequential([
+	    x_dim_normalizer,
+	    cl.layers.Dense(units=1)
+	    ])
+
+	x_dim_model.compile(optimizer=cl.tf.optimizers.Adam(learning_rate=0.1), loss='mean_absolute_error')
+
+	x_dim_model.fit(
+		train_features['x'],
+		train_labels,
+		epochs=100,
+		# Suppress logging.
+		verbose=0,
+		# Calculate validation results on 20% of the training data.
+		validation_split = 0.2)
+
+	return x_dim_model
+
 # this is the main method. This won't run when called this module in another python script.
 def main():
 	# The first parameter passed to this module is the url for csv file. 
