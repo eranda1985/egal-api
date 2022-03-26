@@ -37,7 +37,7 @@ public class LinearService : ILinearService
             // python must be enabled in the environment variable for the following. 
             python.StartInfo.RedirectStandardOutput = true;
             python.StartInfo.UseShellExecute = false;
-            python.StartInfo.Arguments = $"{_pythonDir}\\lr.py {url}";
+            python.StartInfo.Arguments = $"{_pythonDir}/lr.py {url}";
             python.StartInfo.FileName = "python";
             python.Start();
 
@@ -71,8 +71,8 @@ public class LinearService : ILinearService
             // python must be enabled in the environment variable for the following. 
             python.StartInfo.RedirectStandardOutput = true;
             python.StartInfo.UseShellExecute = false;
-            python.StartInfo.Arguments = $"{_pythonDir}\\graph.py {url}";
-            python.StartInfo.FileName = "python";
+            python.StartInfo.Arguments = $"{_pythonDir}/graph.py {url}";
+            python.StartInfo.FileName = "python3.8";
             python.Start();
 
             var base64Str = python.StandardOutput.ReadToEnd();
@@ -89,8 +89,8 @@ public class LinearService : ILinearService
             // python must be enabled in the environment variable for the following. 
             python.StartInfo.RedirectStandardOutput = true;
             python.StartInfo.UseShellExecute = false;
-            python.StartInfo.Arguments = $"{_pythonDir}\\hist.py {url}";
-            python.StartInfo.FileName = "python";
+            python.StartInfo.Arguments = $"{_pythonDir}/hist.py {url}";
+            python.StartInfo.FileName = "python3.8";
             python.Start();
 
             var base64Str = python.StandardOutput.ReadToEnd();
@@ -107,8 +107,8 @@ public class LinearService : ILinearService
             // python must be enabled in the environment variable for the following. 
             python.StartInfo.RedirectStandardOutput = true;
             python.StartInfo.UseShellExecute = false;
-            python.StartInfo.Arguments = $"{_pythonDir}\\regression_plot.py {url}";
-            python.StartInfo.FileName = "python";
+            python.StartInfo.Arguments = $"{_pythonDir}/regression_plot.py {url}";
+            python.StartInfo.FileName = "python3.8";
             python.Start();
 
             var base64Str = python.StandardOutput.ReadToEnd();
@@ -140,8 +140,8 @@ public class LinearService : ILinearService
             // python must be enabled in the environment variable for the following. 
             python.StartInfo.RedirectStandardOutput = true;
             python.StartInfo.UseShellExecute = false;
-            python.StartInfo.Arguments = $"{_pythonDir}\\stats.py {url}";
-            python.StartInfo.FileName = "python";
+            python.StartInfo.Arguments = $"{_pythonDir}/stats.py {url}";
+            python.StartInfo.FileName = "python3.8";
             python.Start();
 
             var statsData = python.StandardOutput.ReadToEnd();
