@@ -112,7 +112,7 @@ public class LinearService : ILinearService
             python.Start();
 
             var base64Str = python.StandardOutput.ReadToEnd();
-            return await Task.FromResult<string>(base64Str);
+            return (!string.IsNullOrEmpty(base64Str)) ? await Task.FromResult<string>(base64Str) : throw new Exception("Graph generation failed.");
         }
     }
 
