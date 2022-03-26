@@ -38,7 +38,7 @@ public class LinearService : ILinearService
             python.StartInfo.RedirectStandardOutput = true;
             python.StartInfo.UseShellExecute = false;
             python.StartInfo.Arguments = $"{_pythonDir}/lr.py {url}";
-            python.StartInfo.FileName = "python";
+            python.StartInfo.FileName = "python3.8";
             python.Start();
 
             var jsonStr = python.StandardOutput.ReadToEnd();
