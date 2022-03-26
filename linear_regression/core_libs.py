@@ -9,3 +9,6 @@ import scipy as sf
 from tensorflow import keras
 from keras import layers
 from scipy import stats
+import ssl
+
+ssl._create_default_https_context = ssl._create_unverified_context
