@@ -5,7 +5,7 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
     ApplicationName = typeof(Program).Assembly.FullName,
-    ContentRootPath = Directory.GetCurrentDirectory()
+    ContentRootPath = "/var/www/egal-api/bin"
 });
 
 // Add services to the container.
