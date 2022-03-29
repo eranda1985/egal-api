@@ -1,5 +1,6 @@
 using LinearServices;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
@@ -11,7 +12,19 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options=>{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Linear Regression API",
+        Description = "A Simple API to calculate linear regression for 2 dimensional dat-sets.",
+        Contact = new OpenApiContact
+        {
+            Name = "Eranda Galhenage",
+            Url = new Uri("https://eranda.wordpress.com")
+        }
+    });
+});
 builder.Services.AddCors();
 builder.Services.AddControllers();
 builder.Services.AddWebEncoders();
@@ -43,6 +56,9 @@ app.UseForwardedHeaders(); // Forward headers in case we are behind a reverse pr
 //app.MapGet("/linear", () => { return "Welcome to Linear Regression API."; });
 
 // POST "/linear/regression
+/// <summary>
+/// Get the linear regression result for the dataset.
+/// </summary>
 app.MapPost("/linear/regression", async ([FromBody] RegressionRequest req) =>
  {
      try
@@ -60,6 +76,9 @@ app.MapPost("/linear/regression", async ([FromBody] RegressionRequest req) =>
  .Produces(StatusCodes.Status404NotFound);
 
 // POST /linear/plot
+/// <summary>
+/// Get 2D graph for the given dataset.
+/// </summary>
 app.MapPost("/linear/plot", async ([FromBody] RegressionRequest req) =>
 {
     try
@@ -79,6 +98,9 @@ app.MapPost("/linear/plot", async ([FromBody] RegressionRequest req) =>
 .Produces(StatusCodes.Status404NotFound);
 
 // POST linear/hist
+/// <summary>
+/// Get X - axis histogram for the dataset.
+/// </summary>
 app.MapPost("/linear/hist", async ([FromBody] RegressionRequest req) =>
 {
     try
@@ -98,6 +120,9 @@ app.MapPost("/linear/hist", async ([FromBody] RegressionRequest req) =>
 .Produces(StatusCodes.Status404NotFound);
 
 // POST /linear/regressionplot
+/// <summary>
+/// Get 2D graph with linear regression overlay.
+/// </summary>
 app.MapPost("/linear/regressionplot", async ([FromBody] RegressionRequest req) =>
 {
     try
@@ -117,6 +142,9 @@ app.MapPost("/linear/regressionplot", async ([FromBody] RegressionRequest req) =
 .Produces(StatusCodes.Status404NotFound);
 
 // POST /linear/stats
+/// <summary>
+/// Get statistics for each dimension in the dataset.
+/// </summary>
 app.MapPost("/linear/stats", async ([FromBody] RegressionRequest req) =>
 {
     try
