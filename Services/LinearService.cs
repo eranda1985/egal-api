@@ -38,7 +38,7 @@ public class LinearService : ILinearService
             python.StartInfo.RedirectStandardOutput = true;
             python.StartInfo.UseShellExecute = false;
             python.StartInfo.Arguments = $"{_pythonDir}/lr.py {url}";
-            python.StartInfo.FileName = "python";
+            python.StartInfo.FileName = "python3.8";
             python.Start();
 
             var jsonStr = python.StandardOutput.ReadToEnd();
@@ -76,7 +76,7 @@ public class LinearService : ILinearService
             python.Start();
 
             var base64Str = python.StandardOutput.ReadToEnd();
-            return base64Str;
+            return (!string.IsNullOrEmpty(base64Str)) ? base64Str : throw new Exception("Graph Generation failed");
         }
     }
 
@@ -94,7 +94,7 @@ public class LinearService : ILinearService
             python.Start();
 
             var base64Str = python.StandardOutput.ReadToEnd();
-            return await Task.FromResult<string>(base64Str);
+            return (!string.IsNullOrEmpty(base64Str)) ? await Task.FromResult<string>(base64Str) : throw new Exception("Histogram generation failed");
         }
     }
 
@@ -112,7 +112,7 @@ public class LinearService : ILinearService
             python.Start();
 
             var base64Str = python.StandardOutput.ReadToEnd();
-            return await Task.FromResult<string>(base64Str);
+            return (!string.IsNullOrEmpty(base64Str)) ? await Task.FromResult<string>(base64Str) : throw new Exception("Linear regression graph generation failed.");
         }
     }
 
