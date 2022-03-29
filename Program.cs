@@ -17,7 +17,7 @@ builder.Services.AddSwaggerGen(options=>{
     {
         Version = "v1",
         Title = "Linear Regression API",
-        Description = "A Simple API to calculate linear regression for 2 dimensional dat-sets.",
+        Description = "A Simple API to calculate linear regression for 2 dimensional data-sets.",
         Contact = new OpenApiContact
         {
             Name = "Eranda Galhenage",
