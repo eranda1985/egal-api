@@ -11,7 +11,7 @@ def plot_regression_graph(url):
     train_features, training_labels = lr.get_training_sets(url)
     x_dimension_trained_model = lr.linear_regression_model(url)
 
-    x = cl.np.array(cl.tf.linspace(0.0, 100, 101))
+    x = cl.np.array(train_features['x'][:500])
     y = cl.np.array(x_dimension_trained_model.predict(x)).reshape(-1)
 
     fig = cl.plt.figure()
